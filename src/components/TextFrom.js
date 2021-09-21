@@ -20,10 +20,10 @@ export default function TextFrom(props) {
     props.showAlert("Text is Cleared!","success");
   };
   const handleCopy = () => {
-    var text = document.getElementById("mybox");
-    text.select();
-    navigator.clipboard.writeText(text.value);
-    document.getSelection().removeAllRanges();
+    // var text = document.getElementById("mybox");
+    // text.select();
+    navigator.clipboard.writeText(text);
+    // document.getSelection().removeAllRanges();
     props.showAlert("Copied to Clipboard!","success");
   };
   const handleExtraSpace = () =>{
@@ -31,13 +31,13 @@ export default function TextFrom(props) {
     setText(newText.join(" "));
   }
   const handeleOnchange = (event) => {
-    console.log("on change");
+    // console.log("on change");
     setText(event.target.value);
   };
   return (
     <>
-      <div className="mb-3 mt-2" style = {{color:props.mode==="dark"?"white":"#042743"}}>
-        <h1 className="mb-4">{props.heading}</h1>
+      <div className="mb-4 mt-2" style = {{color:props.mode==="dark"?"white":"#042743"}}>
+        <h1 className="mb-2">{props.heading}</h1>
         <textarea
         style = {{backgroundColor:props.mode==="dark"?"#13466e":"white",color:props.mode==="dark"?"white":"#042743"}}
           className="form-control"
@@ -66,7 +66,7 @@ export default function TextFrom(props) {
       <div className="container my-4" style = {{color:props.mode==="dark"?"white":"#042743"}}>
         <h1>Your text Summary</h1>
         <p>
-          {text.split(" ").filter((ele)=>{return ele.length !==0}).length} words and {text.length} Characters
+          {text.split(/\s+/).filter((ele)=>{return ele.length !==0}).length} words and {text.length} Characters
         </p>
         <p>{0.008 * text.split(" ").filter((ele)=>{return ele.length !==0}).length} Minutes read</p>
         <h2>Preview</h2>
