@@ -23,6 +23,7 @@ export default function TextFrom(props) {
     var text = document.getElementById("mybox");
     text.select();
     navigator.clipboard.writeText(text.value);
+    document.getSelection().removeAllRanges();
     props.showAlert("Copied to Clipboard!","success");
   };
   const handleExtraSpace = () =>{
@@ -35,10 +36,10 @@ export default function TextFrom(props) {
   };
   return (
     <>
-      <div className="mb-3" style = {{color:props.mode==="dark"?"white":"#042743"}}>
-        <h1>{props.heading}</h1>
+      <div className="mb-3 mt-2" style = {{color:props.mode==="dark"?"white":"#042743"}}>
+        <h1 className="mb-4">{props.heading}</h1>
         <textarea
-        style = {{backgroundColor:props.mode==="dark"?"grey":"white",color:props.mode==="dark"?"white":"#042743"}}
+        style = {{backgroundColor:props.mode==="dark"?"#13466e":"white",color:props.mode==="dark"?"white":"#042743"}}
           className="form-control"
           id="mybox"
           value={text}
@@ -46,30 +47,30 @@ export default function TextFrom(props) {
           rows="8"
         ></textarea>
       </div>
-      <button className="btn btn-primary mx-3" onClick={handleCilck}>
+      <button disabled={text.length ===0} className="btn btn-primary mx-1 my-1" onClick={handleCilck}>
         Convert to UpperCase
       </button>
-      <button className="btn btn-success mx-3" onClick={handleCilckLower}>
+      <button disabled={text.length ===0} className="btn btn-success mx-1 my-1" onClick={handleCilckLower}>
         Convert to LowerCase
       </button>
-      <button className="btn btn-success mx-3" onClick={handleCopy}>
+      <button disabled={text.length ===0} className="btn btn-success mx-1 my-1" onClick={handleCopy}>
         Copy Text
       </button>
-      <button className="btn btn-success mx-3" onClick={handleExtraSpace}>
+      <button disabled={text.length ===0} className="btn btn-success mx-1 my-1" onClick={handleExtraSpace}>
         Remove Extra Sapces
       </button>
-      <button className="btn btn-danger mx-3" onClick={handleClaerText}>
+      <button disabled={text.length ===0} className="btn btn-danger mx-1 my-1" onClick={handleClaerText}>
         Clear Text
       </button>
 
       <div className="container my-4" style = {{color:props.mode==="dark"?"white":"#042743"}}>
         <h1>Your text Summary</h1>
         <p>
-          {text.split(" ").length - 1} words and {text.length} Characters
+          {text.split(" ").filter((ele)=>{return ele.length !==0}).length} words and {text.length} Characters
         </p>
-        <p>{0.008 * text.split(" ").length - 0.008} Minutes read</p>
+        <p>{0.008 * text.split(" ").filter((ele)=>{return ele.length !==0}).length} Minutes read</p>
         <h2>Preview</h2>
-        <p>{text.length>0?text:"Enter Something to preview it here"}</p>
+        <p>{text.length>0?text:"Nothing to preview it here"}</p>
       </div>
     </>
   );
